@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="estilos.css">
+        <title>Mi primera practica</title>
+    </head>
+    <body>
+        <h1>Hola a todos</h1>
+
+        <p>Escuela mil gradas</p>
+
+        <h2>Lista de nombres</h2> <!-- Mejor usar h2 como subtítulo -->
+
+        <ul>
+            <li>Paco</li>
+            <li>Lisa</li>
+            <li>Yoana</li>
+            <li>Miguel</li>
+            <li>Javier</li>
+        </ul>
+
+        <button>Haz clic aquí</button> <!-- Faltaba el botón del paso 2 -->
+
+        <h2>Inscripciones</h2>
+        <form>
+            <label for="nombre">Nombre</label><br>
+            <input type="text" id="nombre" name="nombre" required><br><br>
+
+            <label for="correo">Correo</label><br>
+            <input type="text" id="correo" name="correo" required><br><br>
+
+            <label for="mensaje" id="label-mensaje">Mensaje</label><br>
+            <textarea id="mensaje" name="mensaje" required></textarea><br><br>
+
+            <button type="submit">Enviar</button>
+        </form>
+        <div id="resultado"></div>
+        <script src="script.js"></script>
+    </body>
+</html>

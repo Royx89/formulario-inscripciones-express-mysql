@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mi primera practica</title>
+    <link rel="stylesheet" href="estilos.css" />
+  </head>
+  <body>
+    <h1>Hola a todos</h1>
+
+    <p>Escuela mil gradas</p>
+
+    <h2>Lista de nombres</h2>
+    <ul>
+      <li>Paco</li>
+      <li>Lisa</li>
+      <li>Yoana</li>
+      <li>Miguel</li>
+      <li>Javier</li>
+    </ul>
+
+    <button>Haz clic aquí</button>
+
+    <h2>Inscripciones</h2>
+    <form novalidate>
+      <label for="nombre">Nombre</label><br>
+      <input type="text" id="nombre" name="nombre" required minlength="2" maxlength="80"><br><br>
+
+      <label for="correo">Correo</label><br>
+      <input type="email" id="correo" name="correo" required maxlength="120"><br><br>
+
+      <label for="mensaje" id="label-mensaje">Mensaje</label><br>
+      <textarea id="mensaje" name="mensaje" required minlength="10" maxlength="500"></textarea><br><br>
+
+      <button type="submit">Enviar</button>
+    </form>
+
+    <div id="resultado" aria-live="polite"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
