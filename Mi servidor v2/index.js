@@ -9,7 +9,7 @@ app.use(express.json());
 app.get('/', (_req, res) => res.json({ ok: true, salud: 'Servidor activo v2' }));
 
 app.post(
-  '/inscribir',
+  '/inscribir', 
   [
     body('nombre').trim().isLength({ min: 2, max: 80 })
       .withMessage('El nombre debe tener entre 2 y 80 caracteres.'),

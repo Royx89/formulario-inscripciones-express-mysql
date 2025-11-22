@@ -4,14 +4,31 @@ const express = require('express');
 const cors = require('cors');
 const { body, param, validationResult } = require('express-validator');
 const pool = require('./db');
+const path = require('path');          // 👈 NUEVO
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (_req, res) => res.json({ ok: true, salud: 'Servidor activo v3' }));
+// 👇 RUTA ESTÁTICA CORRECTA A ../Fase3
+// Carpeta del servidor:  I:\Documentos\html curso\Mi servidor v3
+// Carpeta del front:     I:\Documentos\html curso\Fase3
+const staticPath = path.join(__dirname, '..', 'Fase3');
+app.use(express.static(staticPath));   // 👈 Sirve lista.html, estilos.css, lista.js
 
-// CREATE (POST) ------------------------------------------------------------
+// 🟢 Opcional: que /lista sirva directamente la página HTML
+app.get('/lista', (_req, res) => {
+  res.sendFile(path.join(staticPath, 'lista.html'));
+});
+
+// Salud del servidor
+app.get('/', (_req, res) => {
+  res.sendFile(path.join(staticPath, 'lista.html'));
+});
+
+
+// CREATE (POST)
 app.post(
   '/inscribir',
   [
@@ -23,8 +40,10 @@ app.post(
   async (req, res) => {
     const errores = validationResult(req);
     if (!errores.isEmpty()) {
-      return res.status(400).json({ ok: false,
-        errores: errores.array().map(e => ({ campo: e.path, msg: e.msg })) });
+      return res.status(400).json({
+        ok: false,
+        errores: errores.array().map(e => ({ campo: e.path, msg: e.msg })),
+      });
     }
 
     const { nombre, correo, mensaje } = req.body;
@@ -41,7 +60,7 @@ app.post(
   }
 );
 
-// READ (GET) ---------------------------------------------------------------
+// READ (GET)
 app.get('/listar', async (_req, res) => {
   try {
     const [rows] = await pool.query(
@@ -54,7 +73,7 @@ app.get('/listar', async (_req, res) => {
   }
 });
 
-// UPDATE (PUT) -------------------------------------------------------------
+// UPDATE (PUT)
 app.put(
   '/inscripciones/:id',
   [
@@ -67,8 +86,10 @@ app.put(
   async (req, res) => {
     const errores = validationResult(req);
     if (!errores.isEmpty()) {
-      return res.status(400).json({ ok: false,
-        errores: errores.array().map(e => ({ campo: e.path, msg: e.msg })) });
+      return res.status(400).json({
+        ok: false,
+        errores: errores.array().map(e => ({ campo: e.path, msg: e.msg })),
+      });
     }
 
     const id = parseInt(req.params.id, 10);
@@ -90,22 +111,25 @@ app.put(
   }
 );
 
-// DELETE (DELETE) ----------------------------------------------------------
+// DELETE (DELETE)
 app.delete(
   '/inscripciones/:id',
-  [ param('id').isInt().withMessage('id inválido') ],
+  [param('id').isInt().withMessage('id inválido')],
   async (req, res) => {
     const errores = validationResult(req);
     if (!errores.isEmpty()) {
-      return res.status(400).json({ ok: false,
-        errores: errores.array().map(e => ({ campo: e.path, msg: e.msg })) });
+      return res.status(400).json({
+        ok: false,
+        errores: errores.array().map(e => ({ campo: e.path, msg: e.msg })),
+      });
     }
 
     const id = parseInt(req.params.id, 10);
 
     try {
       const [result] = await pool.execute(
-        'DELETE FROM inscripciones WHERE id=?', [id]
+        'DELETE FROM inscripciones WHERE id=?',
+        [id]
       );
       if (result.affectedRows === 0) {
         return res.status(404).json({ ok: false, error: 'No existe ese id.' });
