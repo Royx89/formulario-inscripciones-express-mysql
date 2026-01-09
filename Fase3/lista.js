@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --------------------------
   async function cargarTabla() {
     try {
-      const resp = await fetch('http://localhost:3000/listar');
+      const resp = await fetch('/listar');
       if (!resp.ok) throw new Error('Error HTTP al listar');
       const data = await resp.json();
 
